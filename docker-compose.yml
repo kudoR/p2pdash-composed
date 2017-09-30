@@ -20,13 +20,6 @@ services:
   volumes:
    - shared:/etc/shared
    - db:/etc/db
-  environment:
-   - FFS_TWINO_USER=${TWINO_USER}
-   - FFS_TWINO_PASSWORD=${TWINO_PW}
-   - FFS_VIVENTOR_USER=${VIVENTOR_USER}
-   - FFS_VIVENTOR_PASSWORD=${VIVENTOR_PW}
-   - FFS_MINTOS_USER=${MINTOS_USER}
-   - FFS_MINTOS_PASSWORD=${MINTOS_PW}
 volumes:
  shared:
  db:
