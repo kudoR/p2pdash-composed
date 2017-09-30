@@ -1,12 +1,14 @@
 package eu.ffs.controller;
 
 
+import eu.ffs.job.importData.AccountEntryItemReaderFactory;
 import eu.ffs.repository.CentralRepositoryService;
 import eu.ffs.repository.ViventorAccountEntryRepository;
-import eu.ffs.repository.entity.MintosAccountEntry;
 import eu.ffs.repository.entity.ViventorAccountEntry;
 import org.springframework.batch.item.ExecutionContext;
+import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.excel.poi.PoiItemReader;
+import org.springframework.batch.item.excel.poi.ViventorAccountEntryItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,19 +36,17 @@ public class ViventorDataController extends BaseDataController {
     @PostMapping("/uploadViventor")
     public ModelAndView handleViventorFileUpload(@RequestParam("file") MultipartFile file) throws Exception {
 
-        PoiItemReader<MintosAccountEntry> reader = new PoiItemReader<>();
-
         byte[] bytes = file.getBytes();
         ByteArrayResource byteArrayResource = new ByteArrayResource(bytes);
 
-        reader.setLinesToSkip(8);
-        reader.setResource(byteArrayResource);
-        reader.setRowMapper(genericRowMapper());
+        AccountEntryItemReaderFactory factory = new AccountEntryItemReaderFactory()
+                .withAccountEntryItemReader(new ViventorAccountEntryItemReader())
+                .withResource(byteArrayResource)
+                .withTargetType(ViventorAccountEntry.class);
 
-        reader.afterPropertiesSet();
-        reader.open(new ExecutionContext());
+        ItemReader<ViventorAccountEntry> reader = factory.build();
 
-        for (MintosAccountEntry read = reader.read(); read != null; read = reader.read()) {
+        for (ViventorAccountEntry read = reader.read(); read != null; read = reader.read()) {
             centralRepositoryService.saveAccountEntry(read);
         }
 

@@ -7,6 +7,7 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.excel.mapping.BeanWrapperRowMapper;
 import org.springframework.batch.item.excel.poi.AccountEntryItemReader;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
 
 import java.io.File;
@@ -45,6 +46,11 @@ public class AccountEntryItemReaderFactory {
                 this.reader.setResource(new FileSystemResource(file));
             }
         }
+        return this;
+    }
+
+    public AccountEntryItemReaderFactory withResource(Resource resource) {
+        this.reader.setResource(resource);
         return this;
     }
 
