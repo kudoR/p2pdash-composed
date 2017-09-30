@@ -32,20 +32,20 @@
     <script type="text/javascript">
         function viewDashboard() {
             $('#upload_box').hide();
-            $('#settings_box').hide();
+            $('#credentials_box').hide();
             $('#dashboard_main').show();
             $('li').eq(0).addClass('active');
             $('li').eq(1).removeClass('active');
         };
         function viewUpload() {
             $('#dashboard_main').hide();
-            $('#settings_box').hide();
+            $('#credentials_box').hide();
             $('#upload_box').show();
         };
         function viewSettings() {
             $('#dashboard_main').hide();
             $('#upload_box').hide();
-            $('#settings_box').show();
+            $('#credentials_box').show();
             $('li').eq(1).addClass('active');
             $('li').eq(0).removeClass('active');
         }
@@ -235,34 +235,53 @@
                                 </div>
                             </div>
 
-                            <div id="settings_box" class="content">
-                                <form method="POST" enctype="multipart/form-data" action="/saveInputPath">
+                            <div id="credentials_box" class="content">
+                                <form method="POST" enctype="multipart/form-data" action="/saveCredentials">
                                     <div class="row">
-                                        <div class="col-md-7">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="input_path_mintos">Mintos Export:</label>
-                                                <input class="form-control" type="text" id="input_path_mintos"
-                                                       name="input_path_mintos"/>
+                                                <label for="twinoUser">Twino User:</label>
+                                                <input class="form-control" type="text" id="twinoUser"
+                                                       name="twinoUser"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="twinoPw">Twino Password:</label>
+                                                <input class="form-control" type="text" id="twinoPw"
+                                                       name="twinoPw"/>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
-                                        <div class="col-md-7">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="input_path_twino">Twino Export:</label>
-                                                <input class="form-control" type="text" id="input_path_twino"
-                                                       name="input_path_twino"/>
+                                                <label for="mintosUser">Mintos User:</label>
+                                                <input class="form-control" type="text" id="mintosUser"
+                                                       name="mintosUser"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="mintosPw">Mintos Password:</label>
+                                                <input class="form-control" type="text" id="mintosPw"
+                                                       name="mintosPw"/>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
-                                        <div class="col-md-7">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="input_path_viventor">Viventor Export:</label>
-                                                <input class="form-control" type="text" id="input_path_viventor"
-                                                       name="input_path_viventor"/>
+                                                <label for="viventorUser">Viventor User:</label>
+                                                <input class="form-control" type="text" id="viventorUser"
+                                                       name="viventorUser"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="viventorPw">Viventor Password:</label>
+                                                <input class="form-control" type="text" id="viventorPw"
+                                                       name="viventorPw"/>
                                             </div>
                                         </div>
                                     </div>
