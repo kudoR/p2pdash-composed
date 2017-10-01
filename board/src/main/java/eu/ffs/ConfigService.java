@@ -1,5 +1,6 @@
 package eu.ffs;
 
+import eu.ffs.repository.ConfigId;
 import eu.ffs.repository.ConfigRepository;
 import eu.ffs.repository.entity.DashboardConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class ConfigService {
     @Autowired
     ConfigRepository configRepository;
 
-    public void updateInputPath(String key, String value) {
+    public void updateInputPath(ConfigId key, String value) {
         if (!StringUtils.isEmpty(value)) {
             DashboardConfiguration dashboardConfiguration = configRepository.findOne(key);
             if (dashboardConfiguration == null) {

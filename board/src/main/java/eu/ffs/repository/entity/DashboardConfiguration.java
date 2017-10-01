@@ -1,5 +1,7 @@
 package eu.ffs.repository.entity;
 
+import eu.ffs.repository.ConfigId;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -10,20 +12,21 @@ import java.io.Serializable;
 @Entity
 public class DashboardConfiguration implements Serializable {
     @Id
-    String configurationId;
+    ConfigId configurationId;
 
     public DashboardConfiguration() {
+
     }
 
-    public DashboardConfiguration(String configurationId) {
+    public DashboardConfiguration(ConfigId configurationId) {
         this.configurationId = configurationId;
     }
 
-    public String getConfigurationId() {
+    public ConfigId getConfigurationId() {
         return configurationId;
     }
 
-    public void setConfigurationId(String configurationId) {
+    public void setConfigurationId(ConfigId configurationId) {
         this.configurationId = configurationId;
     }
 
@@ -35,5 +38,15 @@ public class DashboardConfiguration implements Serializable {
 
     public void setStringValue(String stringValue) {
         this.stringValue = stringValue;
+    }
+
+    private Boolean booleanValue;
+
+    public Boolean getBooleanValue() {
+        return booleanValue;
+    }
+
+    public void setBooleanValue(Boolean booleanValue) {
+        this.booleanValue = booleanValue;
     }
 }

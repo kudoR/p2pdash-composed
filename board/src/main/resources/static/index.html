@@ -83,19 +83,22 @@
                     $('#summe_account_value').html(data.sumReport.accountValue);
                 });
 
-            $.post("/p2pconfig").done(function (data) {
-                var mintosPath = data.mintos;
-                var twinoPath = data.twino;
-                var viventorPath = data.viventor;
-                if (mintosPath !== false) {
-                    $('#input_path_mintos').val(mintosPath);
+            $.post("/getConfig").done(function (data) {
+                var mintosActive = data.AUTO_IMPORT_MINTOS;
+                var twinoActive = data.AUTO_IMPORT_TWINO;
+                var viventorActive = data.AUTO_IMPORT_VIVENTOR;
+                if (mintosActive !== false) {
+                    $('#mintosActive').prop('checked', mintosActive);
                 }
-                if (twinoPath !== false) {
-                    $('#input_path_twino').val(twinoPath);
+                if (twinoActive !== false) {
+                    $('#twinoActive').prop('checked', twinoActive);
                 }
-                if (viventorPath !== false) {
-                    $('#input_path_viventor').val(viventorPath);
+                if (viventorActive !== false) {
+                    $('#viventorActive').prop('checked', viventorActive);
                 }
+            });
+            $.post("/getCredentialsSettings").done(function(data) {
+                $('#twinoUser').val(data.TWINO);
             });
         });
 
@@ -118,13 +121,13 @@
                 <li>
                     <a onclick="viewUpload()">
                         <i class="pe-7s-upload"></i>
-                        <p>Upload</p>
+                        <p>Manueller Upload</p>
                     </a>
                 </li>
                 <li class="">
                     <a onclick="viewSettings()">
                         <i class="pe-7s-edit"></i>
-                        <p>Einstellungen</p>
+                        <p>Scraper Einstellungen</p>
                     </a>
                 </li>
             </ul>
@@ -204,7 +207,7 @@
                                     <form method="POST" enctype="multipart/form-data" action="/uploadTwino">
 
                                             <span class="btn btn-default btn-file">
-                                                    Choose Twino Export: <input type="file" name="file"/>
+                                                    Twino Export Datei ausw&auml;hlen: <input type="file" name="file"/>
                                             </span>
 
                                         <input type="submit" value="Upload"/>
@@ -215,7 +218,7 @@
                                     <form method="POST" enctype="multipart/form-data" action="/uploadMintos">
 
                                             <span class="btn btn-default btn-file">
-                                                    Choose Mintos Export: <input type="file" name="file"/>
+                                                    Mintos Export Datei ausw&auhlen: <input type="file" name="file"/>
                                             </span>
 
                                         <input type="submit" value="Upload"/>
@@ -226,7 +229,7 @@
                                     <form method="POST" enctype="multipart/form-data" action="/uploadViventor">
 
                                             <span class="btn btn-default btn-file">
-                                                    Choose Viventor Export: <input type="file" name="file"/>
+                                                    Viventor Export Datei ausw&auhlen: <input type="file" name="file"/>
                                             </span>
 
                                         <input type="submit" value="Upload"/>
@@ -236,8 +239,15 @@
                             </div>
 
                             <div id="credentials_box" class="content">
-                                <form method="POST" enctype="multipart/form-data" action="/saveCredentials">
+                                <form method="POST" enctype="multipart/form-data" action="/saveScraperSettings">
                                     <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="twinoActive">Twino Auto Import active?</label>
+                                                <input class="form-control" type="checkbox" id="twinoActive"
+                                                       name="twinoActive"/>
+                                            </div>
+                                        </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="twinoUser">Twino User:</label>
@@ -248,12 +258,19 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="twinoPw">Twino Password:</label>
-                                                <input class="form-control" type="text" id="twinoPw"
+                                                <input class="form-control" type="password" id="twinoPw"
                                                        name="twinoPw"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="mintosActive">Mintos Auto Import active?</label>
+                                                <input class="form-control" type="checkbox" id="mintosActive"
+                                                       name="mintosActive"/>
+                                            </div>
+                                        </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="mintosUser">Mintos User:</label>
@@ -264,12 +281,19 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="mintosPw">Mintos Password:</label>
-                                                <input class="form-control" type="text" id="mintosPw"
+                                                <input class="form-control" type="password" id="mintosPw"
                                                        name="mintosPw"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="viventorActive">Viventor Auto Import active?</label>
+                                                <input class="form-control" type="checkbox" id="viventorActive"
+                                                       name="viventorActive"/>
+                                            </div>
+                                        </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="viventorUser">Viventor User:</label>
@@ -280,7 +304,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="viventorPw">Viventor Password:</label>
-                                                <input class="form-control" type="text" id="viventorPw"
+                                                <input class="form-control" type="password" id="viventorPw"
                                                        name="viventorPw"/>
                                             </div>
                                         </div>
