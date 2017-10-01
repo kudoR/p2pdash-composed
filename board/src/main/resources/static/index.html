@@ -99,6 +99,11 @@
             });
             $.post("/getCredentialsSettings").done(function(data) {
                 $('#twinoUser').val(data.TWINO);
+                $('#twinoPw').val('1234');
+                $('#mintosUser').val(data.MINTOS);
+                $('#mintosPw').val('1234');
+                $('#viventorUser').val(data.VIVENTOR);
+                $('#viventorPw').val('1234');
             });
         });
 

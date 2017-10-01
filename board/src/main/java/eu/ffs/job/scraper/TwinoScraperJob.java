@@ -2,11 +2,12 @@ package eu.ffs.job.scraper;
 
 import eu.ffs.repository.CredentialRepository;
 import eu.ffs.repository.entity.CredentialId;
+import eu.ffs.repository.entity.CredentialToken;
 import eu.ffs.repository.entity.Credentials;
 import eu.ffs.scraper.TwinoScraper;
-import org.apache.xerces.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.net.MalformedURLException;
 import java.util.Optional;
@@ -24,10 +25,13 @@ public class TwinoScraperJob {
         Optional<Credentials> credentials = java.util.Optional.ofNullable(credentialRepository.findOne(CredentialId.TWINO));
 
         if (credentials.isPresent()) {
-            new TwinoScraper().getExport(
-                    credentials.get().getCredentialToken().getUser(),
-                    new String(Base64.decode(credentials.get().getCredentialToken().getPassword()))
-            );
+            CredentialToken credentialToken = credentials.get().getCredentialToken();
+            String user = credentialToken.getUser();
+            String password = credentialToken.getPassword();
+
+            if (!StringUtils.isEmpty(user) && !StringUtils.isEmpty(password)) {
+                new TwinoScraper().getExport(user, password);
+            }
         }
     }
 }

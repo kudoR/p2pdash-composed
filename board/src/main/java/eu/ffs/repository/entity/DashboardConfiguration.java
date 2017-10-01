@@ -40,13 +40,13 @@ public class DashboardConfiguration implements Serializable {
         this.stringValue = stringValue;
     }
 
-    private Boolean booleanValue;
+    private boolean booleanValue;
 
-    public Boolean getBooleanValue() {
+    public boolean getBooleanValue() {
         return booleanValue;
     }
 
-    public void setBooleanValue(Boolean booleanValue) {
+    public void setBooleanValue(boolean booleanValue) {
         this.booleanValue = booleanValue;
     }
 }

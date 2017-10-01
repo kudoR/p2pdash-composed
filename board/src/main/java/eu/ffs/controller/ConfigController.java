@@ -52,20 +52,6 @@ public class ConfigController {
         return usernames;
     }
 
-//
-//    @PostMapping("/saveInputPath")
-//    public ModelAndView handleSavePathInput(
-//            @RequestParam("input_path_twino") String input_path_twino,
-//            @RequestParam("input_path_mintos") String input_path_mintos,
-//            @RequestParam("input_path_viventor") String input_path_viventor) {
-//
-//        handleSaveSetting(CONFIG_REPO_KEY_MINTOS, input_path_mintos);
-//        handleSaveSetting(CONFIG_REPO_KEY_TWINO, input_path_twino);
-//        handleSaveSetting(CONFIG_REPO_KEY_VIVENTOR, input_path_viventor);
-//
-//        return new ModelAndView("redirect:/");
-//    }
-
     private void handleSaveSetting(ConfigId key, String value) {
 
         configService.updateInputPath(key, value);

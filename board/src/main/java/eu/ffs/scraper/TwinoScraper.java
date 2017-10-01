@@ -18,20 +18,17 @@ public class TwinoScraper extends ScraperBase {
             System.out.println("Starting TwinoScraper");
 
             if (!StringUtils.isEmpty(user) && !StringUtils.isEmpty(pw)) {
-                System.out.println(1);
+
                 driver.get("https://www.twino.eu/de/");
 
                 this.clickOnElemNotInViewport(By.className("js-login-btn"));
-                System.out.println(2);
 
                 By username_selector = By.className("login__inputText");
                 wait.until(ExpectedConditions.visibilityOfElementLocated(username_selector));
-                System.out.println(3);
 
                 WebElement username = driver.findElement(username_selector);
                 username.clear();
                 username.sendKeys(user);
-                System.out.println(4);
 
                 WebElement password = driver.findElement(By.className("login__inputPass"));
                 password.clear();
@@ -40,13 +37,11 @@ public class TwinoScraper extends ScraperBase {
 
                 clickOnElemNotInViewport(By.className("login__btn"));
                 Thread.sleep(5000);
-                System.out.println(5);
 
                 driver.get("https://www.twino.eu/de/profile/investor/my-investments/account-transactions");
 
                 Thread.sleep(2000);
 
-//                clickOnElemNotInViewport(By.xpath("//button[contains(@ng-click,'exportToExcel()')]"));
                 clickOnElemNotInViewport(By.className("accStatement__pdf"));
                 Thread.sleep(1000);
                 System.out.println(6);
@@ -56,7 +51,6 @@ public class TwinoScraper extends ScraperBase {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Boom.");
         } finally {
             File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             try {
