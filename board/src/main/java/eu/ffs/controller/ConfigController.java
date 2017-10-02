@@ -1,6 +1,7 @@
 package eu.ffs.controller;
 
 import eu.ffs.ConfigService;
+import eu.ffs.job.scraper.ScraperRunner;
 import eu.ffs.repository.ConfigId;
 import eu.ffs.repository.ConfigRepository;
 import eu.ffs.repository.CredentialRepository;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -31,6 +33,9 @@ public class ConfigController {
 
     @Autowired
     ConfigService configService;
+
+    @Autowired
+    ScraperRunner scraperRunner;
 
     @RequestMapping("/getConfig")
     public Object getConfiguration() {
@@ -67,7 +72,7 @@ public class ConfigController {
             @RequestParam(value = "viventorPw", required = false) String viventorPw,
             @RequestParam(value = "twinoActive", required = false) Boolean twinoActive,
             @RequestParam(value = "mintosActive", required = false) Boolean mintosActive,
-            @RequestParam(value = "viventorActive", required = false) Boolean viventorActive) {
+            @RequestParam(value = "viventorActive", required = false) Boolean viventorActive) throws MalformedURLException, InterruptedException {
         saveOrUpdateCredentials(CredentialId.TWINO, Optional.ofNullable(twinoUser), Optional.ofNullable(twinoPw));
         saveOrUpdateCredentials(CredentialId.MINTOS, Optional.ofNullable(mintosUser), Optional.ofNullable(mintosPw));
         saveOrUpdateCredentials(CredentialId.VIVENTOR, Optional.ofNullable(viventorUser), Optional.ofNullable(viventorPw));
@@ -75,6 +80,8 @@ public class ConfigController {
         saveOrUpdateConfig(ConfigId.AUTO_IMPORT_MINTOS, Optional.empty(), Optional.ofNullable(mintosActive));
         saveOrUpdateConfig(ConfigId.AUTO_IMPORT_TWINO, Optional.empty(), Optional.ofNullable(twinoActive));
         saveOrUpdateConfig(ConfigId.AUTO_IMPORT_VIVENTOR, Optional.empty(), Optional.ofNullable(viventorActive));
+
+        scraperRunner.perform();
 
         return new ModelAndView("redirect:/");
 

@@ -2,11 +2,13 @@ package eu.ffs.job.scraper;
 
 import eu.ffs.repository.ConfigId;
 import eu.ffs.repository.ConfigRepository;
+import eu.ffs.repository.entity.DashboardConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
+import java.util.Optional;
 
 /**
  * Created by j on 30.09.17.
@@ -26,16 +28,19 @@ public class ScraperRunner {
     ConfigRepository configRepository;
 
     @Scheduled(fixedRateString = "${ffs.import.interval}")
-    void perform() throws InterruptedException, MalformedURLException {
-        if (configRepository.findOne(ConfigId.AUTO_IMPORT_MINTOS).getBooleanValue()) {
+    public void perform() throws InterruptedException, MalformedURLException {
+        Optional<DashboardConfiguration> configurationMintos = Optional.ofNullable(configRepository.findOne(ConfigId.AUTO_IMPORT_MINTOS));
+        if (configurationMintos.isPresent() && configurationMintos.get().getBooleanValue()) {
             System.out.println("Running MintosScraper.");
             mintosScraperJob.perform();
         }
-        if (configRepository.findOne(ConfigId.AUTO_IMPORT_TWINO).getBooleanValue()) {
+        Optional<DashboardConfiguration> configurationTwino = Optional.ofNullable(configRepository.findOne(ConfigId.AUTO_IMPORT_TWINO));
+        if (configurationTwino.isPresent() && configurationTwino.get().getBooleanValue()) {
             System.out.println("Running TwinoScraper");
             twinoScraperJob.perform();
         }
-        if (configRepository.findOne(ConfigId.AUTO_IMPORT_VIVENTOR).getBooleanValue()) {
+        Optional<DashboardConfiguration> configurationViventor = Optional.ofNullable(configRepository.findOne(ConfigId.AUTO_IMPORT_VIVENTOR));
+        if (configurationViventor.isPresent() && configurationViventor.get().getBooleanValue()) {
             System.out.println("Running ViventorScraper");
             viventorScraperJob.perform();
         }

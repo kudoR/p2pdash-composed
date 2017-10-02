@@ -99,11 +99,20 @@
             });
             $.post("/getCredentialsSettings").done(function(data) {
                 $('#twinoUser').val(data.TWINO);
-                $('#twinoPw').val('1234');
+                if (data.TWINO) {
+                    $('#twinoPw').val('12341234123412341234');
+                }
                 $('#mintosUser').val(data.MINTOS);
-                $('#mintosPw').val('1234');
+                if (data.MINTOS) {
+                    $('#mintosPw').val('12341234123412341234');
+                }
                 $('#viventorUser').val(data.VIVENTOR);
-                $('#viventorPw').val('1234');
+                if (data.VIVENTOR) {
+                    $('#viventorPw').val('12341234123412341234');
+                }
+            });
+            $('input[type=password]').focusin(function() {
+                $(this).val(null);
             });
         });
 
