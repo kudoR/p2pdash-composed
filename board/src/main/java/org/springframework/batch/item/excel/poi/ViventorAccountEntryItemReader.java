@@ -9,8 +9,7 @@ public class ViventorAccountEntryItemReader extends AccountEntryItemReader {
     @Override
     protected Sheet getSheet(final int sheet) {
         org.apache.poi.ss.usermodel.Sheet sheetAt = this.workbook.getSheetAt(sheet);
-
-        sheetAt.shiftRows(8, sheetAt.getLastRowNum(), -8);
+        sheetAt.shiftRows(8, Math.max(16, sheetAt.getLastRowNum()), -8);
 
         return new PoiSheet(sheetAt);
     }
