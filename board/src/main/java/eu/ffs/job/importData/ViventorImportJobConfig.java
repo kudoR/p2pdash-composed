@@ -1,11 +1,7 @@
 package eu.ffs.job.importData;
 
 import eu.ffs.Constants;
-import eu.ffs.repository.CentralRepositoryService;
-import eu.ffs.repository.ConfigRepository;
 import eu.ffs.repository.ViventorAccountEntryRepository;
-import eu.ffs.repository.entity.AccountEntry;
-import eu.ffs.repository.entity.DashboardConfiguration;
 import eu.ffs.repository.entity.ViventorAccountEntry;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -24,10 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.scheduling.annotation.Scheduled;
 
-import static eu.ffs.Constants.CONFIG_REPO_KEY_VIVENTOR;
 import static eu.ffs.Constants.JOB_NAME_VIVENTOR;
 
 @Configuration
@@ -80,7 +73,7 @@ public class ViventorImportJobConfig implements AbstractImportJobConfig {
                 .build();
     }
 
-    public void perform(String inputPath) throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+    public JobExecution perform(String inputPath) throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         JobParameters parameters = new JobParametersBuilder().addString(
                 JOB_NAME_VIVENTOR,
                 String.valueOf(System.currentTimeMillis())
@@ -92,7 +85,7 @@ public class ViventorImportJobConfig implements AbstractImportJobConfig {
 
         JobExecution execution = jobLauncher.run(viventorImportJob(), parameters);
         System.out.println("Job finished with status :" + execution.getStatus());
-
+        return execution;
     }
 
 }
