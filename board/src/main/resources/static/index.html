@@ -36,17 +36,22 @@
             $('#dashboard_main').show();
             $('li').eq(0).addClass('active');
             $('li').eq(1).removeClass('active');
+            $('li').eq(2).removeClass('active');
         };
         function viewUpload() {
             $('#dashboard_main').hide();
             $('#credentials_box').hide();
             $('#upload_box').show();
+            $('li').eq(1).addClass('active');
+            $('li').eq(0).removeClass('active');
+            $('li').eq(2).removeClass('active');
         };
         function viewSettings() {
             $('#dashboard_main').hide();
             $('#upload_box').hide();
             $('#credentials_box').show();
-            $('li').eq(1).addClass('active');
+            $('li').eq(2).addClass('active');
+            $('li').eq(1).removeClass('active');
             $('li').eq(0).removeClass('active');
         }
 
@@ -119,20 +124,19 @@
     <div class="sidebar" data-color="orange" data-image="assets/img/sidebar-5.jpg">
         <div class="sidebar-wrapper">
             <ul class="nav">
-                <li class="">
+                <li>
                     <a onclick="viewDashboard()">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <!--in a future release-->
                 <li>
                     <a onclick="viewUpload()">
                         <i class="pe-7s-upload"></i>
                         <p>Manueller Upload</p>
                     </a>
                 </li>
-                <li class="">
+                <li>
                     <a onclick="viewSettings()">
                         <i class="pe-7s-edit"></i>
                         <p>Scraper Einstellungen</p>
@@ -246,7 +250,7 @@
                                 </div>
                             </div>
 
-                            <div id="credentials_box" class="content">
+                            <div id="credentials_box" class="content table-responsive table-full-width">
                                 <form method="POST" enctype="multipart/form-data" action="/saveScraperSettings">
                                     <div class="row">
                                         <div class="col-md-2">
