@@ -49,12 +49,12 @@ public class ConfigController {
 
     @RequestMapping("getCredentialsSettings")
     public Object getCredentialsSettings() {
-        HashMap<String, String> usernames = new HashMap<>();
+        HashMap<String, CredentialToken> credentialTokens = new HashMap<>();
         Iterable<Credentials> credentials = credentialRepository.findAll();
         credentials.forEach(c -> {
-            usernames.put(c.getCredentialId().name(), c.getCredentialToken().getUser());
+            credentialTokens.put(c.getCredentialId().name(), c.getCredentialToken());
         });
-        return usernames;
+        return credentialTokens;
     }
 
     private void handleSaveSetting(ConfigId key, String value) {

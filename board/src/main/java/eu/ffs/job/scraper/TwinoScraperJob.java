@@ -6,6 +6,7 @@ import eu.ffs.repository.entity.CredentialToken;
 import eu.ffs.repository.entity.Credentials;
 import eu.ffs.scraper.TwinoScraper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -21,6 +22,7 @@ public class TwinoScraperJob {
     @Autowired
     CredentialRepository credentialRepository;
 
+    @Async
     public void perform() throws MalformedURLException, InterruptedException {
         Optional<Credentials> credentials = java.util.Optional.ofNullable(credentialRepository.findOne(CredentialId.TWINO));
 

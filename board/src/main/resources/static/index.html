@@ -97,22 +97,16 @@
                     $('#viventorActive').prop('checked', viventorActive);
                 }
             });
-            $.post("/getCredentialsSettings").done(function(data) {
-                $('#twinoUser').val(data.TWINO);
-                if (data.TWINO) {
-                    $('#twinoPw').val('12341234123412341234');
-                }
-                $('#mintosUser').val(data.MINTOS);
-                if (data.MINTOS) {
-                    $('#mintosPw').val('12341234123412341234');
-                }
-                $('#viventorUser').val(data.VIVENTOR);
-                if (data.VIVENTOR) {
-                    $('#viventorPw').val('12341234123412341234');
-                }
-            });
-            $('input[type=password]').focusin(function() {
-                $(this).val(null);
+            $.post("/getCredentialsSettings").done(function (data) {
+                $('#twinoUser').val(data.TWINO.user);
+                $('#twinoPw').val(data.TWINO.password);
+
+                $('#mintosUser').val(data.MINTOS.user);
+                $('#mintosPw').val(data.MINTOS.password);
+
+                $('#viventorUser').val(data.VIVENTOR.user);
+                $('#viventorPw').val(data.VIVENTOR.password);
+
             });
         });
 
